@@ -9,13 +9,18 @@ import (
 	"time"
 
 	"github.com/CloudyKit/jet/v6"
+	"github.com/alexedwards/scs/v2"
 	"github.com/dendosan/celeritas/render"
+	"github.com/dendosan/celeritas/session"
 	"github.com/go-chi/chi/v5"
 	"github.com/joho/godotenv"
 )
 
 const version = "1.0.0"
 
+// Celeritas is the overall type for the Celeritas package.
+// Members that are exported in this type are available to any
+// application that uses it.
 type Celeritas struct {
 	AppName  string
 	Debug    bool
@@ -25,13 +30,16 @@ type Celeritas struct {
 	RootPath string
 	Routes   *chi.Mux
 	Render   *render.Render
+	Session  *scs.SessionManager
 	JetViews *jet.Set
 	config   config
 }
 
 type config struct {
-	port     string
-	renderer string
+	port        string
+	renderer    string
+	cookie      cookieConfig
+	sessionType string
 }
 
 func (c *Celeritas) New(rootPath string) error {
@@ -68,7 +76,24 @@ func (c *Celeritas) New(rootPath string) error {
 	c.config = config{
 		port:     os.Getenv("PORT"),
 		renderer: os.Getenv("RENDERER"),
+		cookie: cookieConfig{
+			name:     os.Getenv("COOKIE_NAME"),
+			lifetime: os.Getenv("COOKIE_LIFETIME"),
+			persist:  os.Getenv("COOKIE_PERSISTS"),
+			secure:   os.Getenv("COOKIE_SECURE"),
+		},
+		sessionType: os.Getenv("SESSION_TYPE"),
 	}
+
+	// session
+	sess := session.Session{
+		CookieLifetime: c.config.cookie.lifetime,
+		CookiePersist:  c.config.cookie.persist,
+		CookieName:     c.config.cookie.name,
+		SessionType:    c.config.sessionType,
+	}
+
+	c.Session = sess.InitSession()
 
 	var views = jet.NewSet(
 		jet.NewOSFileSystemLoader(fmt.Sprintf("%s/views", rootPath)),
