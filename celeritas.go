@@ -58,13 +58,11 @@ func (c *Celeritas) New(rootPath string) error {
 		return err
 	}
 
-	// read .env
 	err = godotenv.Load(rootPath + "/.env")
 	if err != nil {
 		return err
 	}
 
-	// create loggers and populate struct
 	infoLog, errorLog := c.startLoggers()
 	c.InfoLog = infoLog
 	c.ErrorLog = errorLog
@@ -81,16 +79,17 @@ func (c *Celeritas) New(rootPath string) error {
 			lifetime: os.Getenv("COOKIE_LIFETIME"),
 			persist:  os.Getenv("COOKIE_PERSISTS"),
 			secure:   os.Getenv("COOKIE_SECURE"),
+			domain:   os.Getenv("COOKIE_DOMAIN"),
 		},
 		sessionType: os.Getenv("SESSION_TYPE"),
 	}
 
-	// session
 	sess := session.Session{
 		CookieLifetime: c.config.cookie.lifetime,
 		CookiePersist:  c.config.cookie.persist,
 		CookieName:     c.config.cookie.name,
 		SessionType:    c.config.sessionType,
+		CookieDomain:   c.config.cookie.domain,
 	}
 
 	c.Session = sess.InitSession()
@@ -110,7 +109,6 @@ func (c *Celeritas) New(rootPath string) error {
 func (c *Celeritas) Init(p initPaths) error {
 	root := p.rootPath
 	for _, path := range p.folderNames {
-		// create folder if it doesn't exist
 		err := c.CreateDirIfNotExist(root + "/" + path)
 		if err != nil {
 			return err
