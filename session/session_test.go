@@ -35,7 +35,7 @@ func TestSession_InitSession(t *testing.T) {
 	}
 
 	if !rv.IsValid() {
-		t.Error("invalid type or kind; kind:", rv.Kind(), rv.Type())
+		t.Error("invalid type or kind; kind:", rv.Kind(), "type:", rv.Type())
 	}
 
 	if sessKind != reflect.ValueOf(sm).Kind() {

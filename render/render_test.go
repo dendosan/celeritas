@@ -23,7 +23,7 @@ var pageData = []struct {
 func TestRender_Page(t *testing.T) {
 
 	for _, test := range pageData {
-		r, err := http.NewRequest(("GET"), "/some-url", nil)
+		r, err := http.NewRequest("GET", "/some-url", nil)
 		if err != nil {
 			t.Error(err)
 		}

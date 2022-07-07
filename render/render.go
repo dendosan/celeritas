@@ -55,7 +55,7 @@ func (c *Render) Page(w http.ResponseWriter, r *http.Request, view string, varia
 	return errors.New("no rendering engine specified")
 }
 
-// GoPage renders a standard Go template.
+// GoPage renders a standard Go template
 func (c *Render) GoPage(w http.ResponseWriter, r *http.Request, view string, data interface{}) error {
 	tmpl, err := template.ParseFiles(fmt.Sprintf("%s/views/%s.page.tmpl", c.RootPath, view))
 	if err != nil {
@@ -75,7 +75,7 @@ func (c *Render) GoPage(w http.ResponseWriter, r *http.Request, view string, dat
 	return nil
 }
 
-// JetPage renders a template using the Jet templating engine.
+// JetPage renders a template using the Jet templating engine
 func (c *Render) JetPage(w http.ResponseWriter, r *http.Request, templateName string, variables, data interface{}) error {
 	var vars jet.VarMap
 
