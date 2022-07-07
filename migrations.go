@@ -11,6 +11,7 @@ import (
 )
 
 func (c *Celeritas) MigrateUp(dsn string) error {
+	log.Println(dsn)
 	m, err := migrate.New("file://"+c.RootPath+"/migrations", dsn)
 	if err != nil {
 		return err
