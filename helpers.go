@@ -7,6 +7,7 @@ const (
 	randomString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0987654321_+"
 )
 
+// RandomString generates a random string length n from values in the const randomString
 func (c *Celeritas) RandomString(n int) string {
 	s, r := make([]rune, n), []rune(randomString)
 
@@ -18,6 +19,7 @@ func (c *Celeritas) RandomString(n int) string {
 	return string(s)
 }
 
+// CreateDirIfNotExist creates a new directory if it does not exist
 func (c *Celeritas) CreateDirIfNotExist(path string) error {
 	const mode = 0755
 	if _, err := os.Stat(path); os.IsNotExist(err) {
@@ -30,6 +32,7 @@ func (c *Celeritas) CreateDirIfNotExist(path string) error {
 	return nil
 }
 
+// CreateFileIfNotExists creates a new file at path if it does not exist
 func (c *Celeritas) CreateFileIfNotExists(path string) error {
 	var _, err = os.Stat(path)
 	if os.IsNotExist(err) {

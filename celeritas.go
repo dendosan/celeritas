@@ -22,18 +22,18 @@ const version = "1.0.0"
 // Members that are exported in this type are available to any
 // application that uses it.
 type Celeritas struct {
-	AppName  string
-	Debug    bool
-	Version  string
-	ErrorLog *log.Logger
-	InfoLog  *log.Logger
-	RootPath string
-	Routes   *chi.Mux
-	Render   *render.Render
-	Session  *scs.SessionManager
-	DB       Database
-	JetViews *jet.Set
-	config   config
+	AppName   string
+	Debug     bool
+	Version   string
+	ErrorLog  *log.Logger
+	InfoLog   *log.Logger
+	RootPath  string
+	Routes    *chi.Mux
+	Render    *render.Render
+	Session   *scs.SessionManager
+	DB        Database
+	JetViews  *jet.Set
+	config    config
 }
 
 type config struct {
@@ -62,13 +62,16 @@ func (c *Celeritas) New(rootPath string) error {
 		return err
 	}
 
+	// read .env
 	err = godotenv.Load(rootPath + "/.env")
 	if err != nil {
 		return err
 	}
 
+	// create loggers
 	infoLog, errorLog := c.startLoggers()
 
+	// connect to database
 	if os.Getenv("DATABASE_TYPE") != "" {
 		db, err := c.OpenDB(os.Getenv("DATABASE_TYPE"), c.BuildDSN())
 		if err != nil {
@@ -105,6 +108,7 @@ func (c *Celeritas) New(rootPath string) error {
 		},
 	}
 
+	// create session
 	sess := session.Session{
 		CookieLifetime: c.config.cookie.lifetime,
 		CookiePersist:  c.config.cookie.persist,
@@ -132,6 +136,7 @@ func (c *Celeritas) New(rootPath string) error {
 func (c *Celeritas) Init(p initPaths) error {
 	root := p.rootPath
 	for _, path := range p.folderNames {
+		// create folder if it doesn't exist
 		err := c.CreateDirIfNotExist(root + "/" + path)
 		if err != nil {
 			return err
