@@ -9,10 +9,14 @@ import (
 
 	"github.com/gertd/go-pluralize"
 	"github.com/iancoleman/strcase"
+	"github.com/fatih/color"
 )
 
 func doMake(arg2, arg3 string) error {
 	switch arg2 {
+	case "key":
+		rnd := cel.RandomString(32)
+		color.Yellow("32 character encryption key: %s", rnd)
 	case "migration":
 		dbType := cel.DB.DataType
 		if arg3 == "" {
