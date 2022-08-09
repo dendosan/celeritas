@@ -2,7 +2,7 @@ module github.com/dendosan/celeritas
 
 go 1.18
 
-require github.com/joho/godotenv v1.3.0
+require github.com/joho/godotenv v1.4.0
 
 require (
 	github.com/CloudyKit/jet/v6 v6.1.0
@@ -24,6 +24,7 @@ require (
 	github.com/jackc/pgx/v4 v4.16.1
 	github.com/justinas/nosurf v1.1.1
 	github.com/robfig/cron/v3 v3.0.1
+	github.com/xhit/go-simple-mail/v2 v2.11.0
 )
 
 require (
@@ -33,6 +34,7 @@ require (
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
 	github.com/dgraph-io/ristretto v0.1.0 // indirect
 	github.com/dustin/go-humanize v1.0.0 // indirect
+	github.com/go-test/deep v1.0.2 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
@@ -52,6 +54,7 @@ require (
 	github.com/mattn/go-colorable v0.1.9 // indirect
 	github.com/mattn/go-isatty v0.0.14 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
+	github.com/toorop/go-dkim v0.0.0-20201103131630-e1cd1a0a5208 // indirect
 	github.com/yuin/gopher-lua v0.0.0-20210529063254-f4c35e4016d9 // indirect
 	go.opencensus.io v0.23.0 // indirect
 	go.uber.org/atomic v1.7.0 // indirect
