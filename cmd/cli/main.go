@@ -20,13 +20,19 @@ func main() {
 		exitGracefully(err)
 	}
 
-	setup()
+	setup(arg1, arg2)
 
 	switch arg1 {
 	case "help":
 		showHelp()
 	case "version":
 		color.Yellow("Application version: " + version)
+	case "new":
+		if arg2 == "" {
+			exitGracefully(errors.New("new requires application name"))
+		}
+		doNew(arg2)
+
 	case "make":
 		if arg2 == "" {
 			exitGracefully(errors.New("make requires a subcommand: (migration|model|handler)"))

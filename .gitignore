@@ -2,3 +2,5 @@ vendor/
 .vscode/
 coverage.out
 testdata/
+.DS_Store
+dist/
